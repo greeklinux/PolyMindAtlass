@@ -1,0 +1,10 @@
+{
+  "name": "polymind-atlas",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Static showcase site for the PolyMind Intelligence Atlas, with edge routing middleware for IP and country blocking.",
+  "dependencies": {
+    "@vercel/functions": "2.2.13"
+  }
+}

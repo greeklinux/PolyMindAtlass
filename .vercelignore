@@ -1,0 +1,41 @@
+# What Vercel uploads. Everything not listed here is the published surface.
+#
+# The site is one self-contained page. The kit is spliced into index.html at
+# build time and the data files are rendered into it at build time, so at
+# runtime the page fetches nothing: a render under the production headers makes
+# exactly one request, for the document itself. Every path below is therefore
+# source, not surface, and was being deployed only as a side effect of
+# deploying the repository.
+#
+# This is not cosmetic. kit/demo.html was reachable, linked by nothing, refused
+# by the site's own content security policy, and rendering seven per-seat
+# percentages beside the word MEASURED. A page nobody needs cannot be broken
+# and cannot be misread.
+#
+# Deliberately NOT ignored, because the deployment needs them:
+#   index.html og-image.png robots.txt sitemap.xml   the published surface
+#   vercel.json                                      routing and headers
+#   middleware.js package.json package-lock.json     the edge middleware build
+
+# The drawing kit: spliced inline at build time, plus its demo page and its
+# reference screenshots. 3.4 MB of source that no visitor requests.
+kit/
+
+# Build and validation helpers. They run before a commit, never in a request.
+tools/
+
+# Content sources rendered into the page at build time.
+data/
+
+# Developer documentation. Describes internals and links into kit/.
+docs/
+README.md
+
+# A reproducible writeup of three bypasses in a live control. All three are
+# closed, so this is not urgent, but a portfolio has no reason to publish it.
+# It stays in the repository, where the audit record belongs.
+SECURITY_REPORT.md
+
+# Repository metadata with no meaning to a browser.
+.gitattributes
+.gitignore
