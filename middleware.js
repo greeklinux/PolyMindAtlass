@@ -34,7 +34,11 @@ const DEFAULT_BLOCKED_COUNTRIES = 'RU,CN,HK,KP,IR,BY,SY,CU,VE'
 
 // Security headers for responses this middleware generates itself. A block page
 // is short-circuited before the static routing layer, so it cannot be assumed to
-// inherit the header set in vercel.json; it carries its own.
+// inherit the header set in vercel.json; it carries its own. It mirrors the
+// document's transport and isolation set (vercel.json) so the 403 is never a
+// weaker response class than the page it refuses: an active-network attacker who
+// steers a victim onto a blocked path must still meet the same HSTS pin,
+// Permissions-Policy opt-out, prefetch-off and cross-origin isolation.
 const BLOCK_HEADERS = {
   'content-type': 'text/plain; charset=utf-8',
   'cache-control': 'no-store',
@@ -46,7 +50,11 @@ const BLOCK_HEADERS = {
   'strict-transport-security': 'max-age=63072000; includeSubDomains; preload',
   'cross-origin-opener-policy': 'same-origin',
   'cross-origin-resource-policy': 'same-origin',
+  'cross-origin-embedder-policy': 'require-corp',
   'x-permitted-cross-domain-policies': 'none',
+  'x-dns-prefetch-control': 'off',
+  'permissions-policy':
+    'accelerometer=(), autoplay=(), browsing-topics=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), payment=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), usb=(), xr-spatial-tracking=()',
   'x-robots-tag': 'noindex, nofollow',
 }
 
